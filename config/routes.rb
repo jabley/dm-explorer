@@ -46,7 +46,7 @@ DmExplorer::Application.routes.draw do
   #     resources :products
   #   end
 
-  root :to => 'dm#index'
+  root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
 
