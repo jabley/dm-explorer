@@ -46,6 +46,8 @@ DmExplorer::Application.routes.draw do
   #     resources :products
   #   end
 
+  match 'direct-messages' => 'direct_message#index', :via => :get
+  match 'direct-messages/:id' => 'direct_message#show', :via => :get
   root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
