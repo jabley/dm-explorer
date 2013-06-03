@@ -55,6 +55,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.23)
     multi_json (1.7.5)
+    oauth (0.4.7)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -116,6 +117,7 @@ DEPENDENCIES
   bootstrap-sass (= 2.2.2.0)
   coffee-rails
   jquery-rails
+  oauth
   rails (= 3.2.13)
   sass-rails
   simple_form
