@@ -1,3 +1,8 @@
 <section>
-  <div>Show a specific DM conversation</div>
+  <% @direct_messages.each do |dm| %>
+    <div>
+      <div><%= dm["created_at"] %> <%= dm["sender"]["name"]%>:</div>
+      <div><%= dm["text"] %></div>
+    </div>
+  <% end %>
 </section>

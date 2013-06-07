@@ -48,6 +48,9 @@ DmExplorer::Application.routes.draw do
 
   match 'direct-messages' => 'direct_message#index', :via => :get
   match 'direct-messages/:id' => 'direct_message#show', :via => :get
+  match 'sessions/new' => 'session#new', :via => :get
+  match 'oauth/callback' => 'session#create', :via => :get
+
   root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"

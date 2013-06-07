@@ -1,3 +1,5 @@
 <section>
-  <div>Show the list of DM conversations</div>
+  <% @senders.each do |name, id| %>
+    <div><a href="/direct-messages/<%= id %>"><%= name %></a></div>
+  <% end %>
 </section>
