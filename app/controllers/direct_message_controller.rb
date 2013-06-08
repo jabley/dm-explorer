@@ -56,7 +56,11 @@ class DirectMessageController < ApplicationController
   def parse_response(response)
     case response.code.to_i
     when 200
-      JSON.parse(response.body)
+      if response["Content-Encoding"] == "gzip"
+        JSON.parse(Zlib::GzipReader.new(StringIO.new(response.body)).read())
+      else
+        JSON.parse(response.body)
+      end
     when 429
       puts "Rate limited for another #{response["X-Rate-Limit-Reset"].to_i - Time.now.to_i} seconds"
       []
@@ -66,13 +70,14 @@ class DirectMessageController < ApplicationController
   # Consumes all of the messages available by the API (currently limited to 800?)
   # Returns a non-nill array of JSON objects representing DMs
   def slurp_messages(base_path = "/1.1/direct_messages.json?count=200&skip_status=1")
-    messages = parse_response(access_token.get(base_path))
+    headers = { "Accept-Encoding" => "gzip" }
+    messages = parse_response(access_token.get(base_path, headers))
     
     earlier_messages = messages
     earliest_id_seen = earliest_id(earlier_messages)
 
     while earliest_id_seen
-      earlier_messages = parse_response(access_token.get("#{base_path}&max_id=#{earliest_id_seen - 1}"))
+      earlier_messages = parse_response(access_token.get("#{base_path}&max_id=#{earliest_id_seen - 1}", headers))
       messages.push(*earlier_messages)
       earliest_id_seen = earliest_id(earlier_messages)
     end
